@@ -34,25 +34,22 @@ NUM			.equ	2019
 ALG_ROM:	SUB		#1000,R5
 			JN		ADD_1000
 			NOP
-			NOP		;código para colocar M no vetor de resposta
+			MOV.B	#'M',0(R6)	;código para colocar M no vetor de resposta
+			INC		R6
 			JMP		ALG_ROM
-			JN		TIRA_1000
 			NOP
-			NOP
+			RET
 
+CENTENA:	NOP
+			RET
 
 
 ADD_1000:	ADD		#1000,R5
-			BR		#39
+			JMP		CENTENA
 			RET
 
-TIRA_1000:	ADD		#1000,R5
-			BR		#41
-			RET
 
-			.data
 
-RESP:		.byte	"RRRRRRRRRRRRR",0
 
 ;-------------------------------------------------------------------------------
 ; Stack Pointer definition
@@ -66,3 +63,6 @@ RESP:		.byte	"RRRRRRRRRRRRR",0
             .sect   ".reset"                ; MSP430 RESET Vector
             .short  RESET
             
+
+			.data
+RESP:		.byte	"RRRRRRRRRRRRR",0
